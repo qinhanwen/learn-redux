@@ -1,15 +1,29 @@
-import React from "react";
-import "./App.css";
-import { Provider } from "./Provider";
-import store from "./Store";
-import Counter from "./Counter";
+import './App.css';
+import { connect } from './react-redux/index';
+import React from 'react';
 
-function App() {
+function App(props) {
+  console.log(props);
   return (
-    <Provider store={store}>
-      <Counter caption="First"></Counter>
-    </Provider>
+    <div>
+      <div>{props.number}</div>
+      <button onClick={props.onIncrement}>Increment</button>
+      <button onClick={props.onDecrement}>Decrement</button>
+    </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => ({
+  number: state.todos
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onIncrement: () => {
+    debugger;
+    dispatch({ type: 'INCREMENT' });
+  },
+  onDecrement: () => dispatch({ type: 'DECREMENT' })
+});
+debugger;
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
